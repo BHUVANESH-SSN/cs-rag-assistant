@@ -10,12 +10,10 @@ def load_all_documents(data_dir: str) -> List[Any]:
     Load all supported files from the data directory and convert to LangChain document structure.
     Supported: PDF, TXT, CSV, Excel, Word, JSON
     """
-    # Use project root data folder
     data_path = Path(data_dir).resolve()
     print(f"[DEBUG] Data path: {data_path}")
     documents = []
 
-    # PDF files
     pdf_files = list(data_path.glob('**/*.pdf'))
     print(f"[DEBUG] Found {len(pdf_files)} PDF files: {[str(f) for f in pdf_files]}")
     for pdf_file in pdf_files:
@@ -28,7 +26,6 @@ def load_all_documents(data_dir: str) -> List[Any]:
         except Exception as e:
             print(f"[ERROR] Failed to load PDF {pdf_file}: {e}")
 
-    # TXT files
     txt_files = list(data_path.glob('**/*.txt'))
     print(f"[DEBUG] Found {len(txt_files)} TXT files: {[str(f) for f in txt_files]}")
     for txt_file in txt_files:
@@ -41,7 +38,6 @@ def load_all_documents(data_dir: str) -> List[Any]:
         except Exception as e:
             print(f"[ERROR] Failed to load TXT {txt_file}: {e}")
 
-    # CSV files
     csv_files = list(data_path.glob('**/*.csv'))
     print(f"[DEBUG] Found {len(csv_files)} CSV files: {[str(f) for f in csv_files]}")
     for csv_file in csv_files:
@@ -54,7 +50,6 @@ def load_all_documents(data_dir: str) -> List[Any]:
         except Exception as e:
             print(f"[ERROR] Failed to load CSV {csv_file}: {e}")
 
-    # Excel files
     xlsx_files = list(data_path.glob('**/*.xlsx'))
     print(f"[DEBUG] Found {len(xlsx_files)} Excel files: {[str(f) for f in xlsx_files]}")
     for xlsx_file in xlsx_files:
@@ -67,7 +62,6 @@ def load_all_documents(data_dir: str) -> List[Any]:
         except Exception as e:
             print(f"[ERROR] Failed to load Excel {xlsx_file}: {e}")
 
-    # Word files
     docx_files = list(data_path.glob('**/*.docx'))
     print(f"[DEBUG] Found {len(docx_files)} Word files: {[str(f) for f in docx_files]}")
     for docx_file in docx_files:
@@ -80,7 +74,6 @@ def load_all_documents(data_dir: str) -> List[Any]:
         except Exception as e:
             print(f"[ERROR] Failed to load Word {docx_file}: {e}")
 
-    # JSON files
     json_files = list(data_path.glob('**/*.json'))
     print(f"[DEBUG] Found {len(json_files)} JSON files: {[str(f) for f in json_files]}")
     for json_file in json_files:
@@ -95,9 +88,3 @@ def load_all_documents(data_dir: str) -> List[Any]:
 
     print(f"[DEBUG] Total loaded documents: {len(documents)}")
     return documents
-
-# Example usage
-if __name__ == "__main__":
-    docs = load_all_documents("data")
-    print(f"Loaded {len(docs)} documents.")
-    print("Example document:", docs[0] if docs else None)

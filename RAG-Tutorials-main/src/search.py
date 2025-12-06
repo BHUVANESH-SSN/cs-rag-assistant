@@ -6,9 +6,8 @@ from langchain_groq import ChatGroq
 load_dotenv()
 
 class RAGSearch:
-    def __init__(self, persist_dir: str = "faiss_store", embedding_model: str = "all-MiniLM-L6-v2", llm_model: str = "gemma2-9b-it"):
+    def __init__(self, persist_dir: str = "faiss_store", embedding_model: str = "paraphrase-MiniLM-L3-v2", llm_model: str = "llama-3.3-70b-versatile"):
         self.vectorstore = FaissVectorStore(persist_dir, embedding_model)
-        # Load or build vectorstore
         faiss_path = os.path.join(persist_dir, "faiss.index")
         meta_path = os.path.join(persist_dir, "metadata.pkl")
         if not (os.path.exists(faiss_path) and os.path.exists(meta_path)):
@@ -30,10 +29,3 @@ class RAGSearch:
         prompt = f"""Summarize the following context for the query: '{query}'\n\nContext:\n{context}\n\nSummary:"""
         response = self.llm.invoke([prompt])
         return response.content
-
-# Example usage
-if __name__ == "__main__":
-    rag_search = RAGSearch()
-    query = "What is attention mechanism?"
-    summary = rag_search.search_and_summarize(query, top_k=3)
-    print("Summary:", summary)

@@ -7,7 +7,7 @@ from sentence_transformers import SentenceTransformer
 from src.embedding import EmbeddingPipeline
 
 class FaissVectorStore:
-    def __init__(self, persist_dir: str = "faiss_store", embedding_model: str = "all-MiniLM-L6-v2", chunk_size: int = 1000, chunk_overlap: int = 200):
+    def __init__(self, persist_dir: str = "faiss_store", embedding_model: str = "paraphrase-MiniLM-L3-v2", chunk_size: int = 1000, chunk_overlap: int = 200):
         self.persist_dir = persist_dir
         os.makedirs(self.persist_dir, exist_ok=True)
         self.index = None
@@ -65,12 +65,3 @@ class FaissVectorStore:
         print(f"[INFO] Querying vector store for: '{query_text}'")
         query_emb = self.model.encode([query_text]).astype('float32')
         return self.search(query_emb, top_k=top_k)
-
-# Example usage
-if __name__ == "__main__":
-    from data_loader import load_all_documents
-    docs = load_all_documents("data")
-    store = FaissVectorStore("faiss_store")
-    store.build_from_documents(docs)
-    store.load()
-    print(store.query("What is attention mechanism?", top_k=3))
